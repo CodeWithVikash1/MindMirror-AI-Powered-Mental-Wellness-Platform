@@ -1,0 +1,32 @@
+{% extends 'user_navigation.html' %}
+{% load static %}
+
+{% block title %}View Reflection - MindMirror{% endblock %}
+
+{% block body %}
+
+<div class="container mt-5">
+<div class="card shadow-lg p-4 rounded-4 bg-dark text-light">
+<h3 class="text-info mb-3">
+    <i class="bi bi-journals me-2"></i>{{ reflection.title }}
+</h3>
+
+<p class="text-light">
+    <i class="bi bi-calendar3 me-1"></i>{{ reflection.date|date:"F d, Y - H:i A" }}
+</p>
+
+<hr class="border-secondary">
+
+<div style="white-space: pre-line;" class="fs-5">
+    {{ reflection.content }}
+</div>
+
+<div class="mt-4 text-end">
+    <a href="{% url 'my_reflections' %}" class="btn btn-outline-info">
+    <i class="bi bi-arrow-left-circle me-1"></i>Back to Reflections
+    </a>
+</div>
+</div>
+</div>
+<div style="margin-top:160px"></div>
+{% endblock %}

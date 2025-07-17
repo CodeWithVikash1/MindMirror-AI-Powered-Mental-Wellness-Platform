@@ -1,0 +1,121 @@
+{% extends 'user_navigation.html' %}
+{% block title %}Insights - MindMirror{% endblock %}
+{% block body %}
+
+<div class="container mt-5">
+<div class="card p-4 shadow rounded-4 bg-dark text-light">
+
+<h3 class="text-center text-warning mb-4">
+    <i class="bi bi-graph-up-arrow me-2"></i> Your Mood Insights
+</h3>
+
+<!-- Summary Cards -->
+<div class="row text-center mb-4">
+    <div class="col-md-4">
+    <div class="p-3 bg-secondary rounded-4">
+        <h5><i class="bi bi-emoji-smile me-1"></i> Most Common Mood</h5>
+        <p class="fs-5">{{ context.most_common_mood|default:"--" }}</p>
+    </div>
+    </div>
+    <div class="col-md-4">
+    <div class="p-3 bg-secondary rounded-4">
+        <h5><i class="bi bi-journal-check me-1"></i> Total Entries</h5>
+        <p class="fs-5">{{ context.total_entries }}</p>
+    </div>
+    </div>
+    <div class="col-md-4">
+    <div class="p-3 bg-secondary rounded-4">
+        <h5><i class="bi bi-calendar-check me-1"></i> Active Days</h5>
+        <p class="fs-5">{{ context.active_days }}</p>
+    </div>
+    </div>
+</div>
+
+
+<!-- Mood Chart -->
+    <h5 class="text-center text-info mb-3">Mood Trend</h5>
+    <canvas id="moodChart" height="300"></canvas>
+
+</div>
+</div>
+
+<!-- Chart.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const moodLabels = {
+1: '😢 Sad',
+2: '😠 Angry',
+3: '😟 Anxious',
+4: '😌 Calm',
+5: '😊 Happy',
+6: '🤩 Excited'
+};
+
+const ctx = document.getElementById('moodChart').getContext('2d');
+const moodChart = new Chart(ctx, {
+type: 'line',
+data: {
+    labels: {{ context.mood_dates|safe }},
+    datasets: [{
+        label: 'Mood Level',
+        data: {{ context.mood_scores|safe }},
+        borderColor: '#0dcaf0',
+        backgroundColor: 'rgba(13, 202, 240, 0.2)',
+        fill: true,
+        tension: 0.4,
+        pointRadius: 5,
+        pointBackgroundColor: '#0dcaf0'
+    }]
+},
+options: {
+    responsive: true,
+    scales: {
+        y: {
+            min: 1,
+            max: 6,
+            ticks: {
+                stepSize: 1,
+                autoSkip: false, // ✅ Force all labels
+                callback: function(value) {
+                    return moodLabels[value] || value;
+                },
+                color: 'white'
+            },
+            title: {
+                display: true,
+                text: 'Mood',
+                color: 'white'
+            }
+        },
+        x: {
+            ticks: {
+                color: 'white'
+            },
+            title: {
+                display: true,
+                text: 'Date',
+                color: 'white'
+            }
+        }
+    },
+    plugins: {
+        tooltip: {
+            callbacks: {
+                label: function(context) {
+                    const moodVal = context.raw;
+                    return `Mood: ${moodLabels[moodVal] || moodVal}`;
+                }
+            }
+        },
+        legend: {
+            labels: {
+                color: 'white'
+            }
+        }
+    }
+}
+});
+</script>
+
+{% endblock %}

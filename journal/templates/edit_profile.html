@@ -1,0 +1,38 @@
+{% extends 'user_navigation.html' %}
+{% load static %}
+{% block title %}Edit Profile - MindMirror{% endblock %}
+
+{% block body %}
+<div class="container mt-5" style="max-width: 600px;">
+<div class="card bg-dark text-light p-5 shadow rounded-4" style="min-height: 250px;">
+
+<h3 class="text-center text-warning mb-5">
+    <i class="bi bi-pencil-square me-2"></i> Edit Your Profile
+</h3>
+
+<form method="POST" class="mx-auto" style="max-width: 500px;">
+    {% csrf_token %}
+
+    <div class="mb-4">
+    <label for="fullname" class="form-label text-info fw-semibold">
+        <i class="bi bi-person-fill me-1"></i> Full Name
+    </label>
+    <input type="text" name="fullname" id="fullname" class="form-control bg-secondary text-light border-0 rounded-3 py-3"
+            placeholder="Enter your full name"
+            value="{{ user.first_name }} {{ user.last_name }}" required>
+    </div>
+
+    <div class="text-center mt-5">
+    <button type="submit" class="btn btn-info px-5 py-2">
+        <i class="bi bi-save me-1"></i> Save Changes
+    </button>
+    <a href="{% url 'profile' %}" class="btn btn-outline-light ms-3 px-4 py-2">
+        <i class="bi bi-arrow-left-circle me-1"></i> Cancel
+    </a>
+    </div>
+</form>
+
+</div>
+</div>
+<div style="height: 60px;"></div>
+{% endblock %}

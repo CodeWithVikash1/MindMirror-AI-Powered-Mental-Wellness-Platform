@@ -1,0 +1,100 @@
+{% extends 'navigation.html' %}
+{% load static %}
+
+{% block title %}Signup - MindMirror{% endblock %}
+
+{% block body %}
+<div class="position-relative" style="background: url('{% static 'images/login.jpg' %}') no-repeat center center / cover; min-height: 100vh;">
+  
+  <!-- Overlay -->
+  <div class="position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(0, 0, 0, 0.7);"></div>
+
+  <!-- Signup Form Container -->
+  <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh; position: relative; z-index: 2;">
+    <div class="glass-container p-5" style="max-width: 460px; width: 100%; border-radius: 15px; box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);">
+      
+        <div class="text-center mb-4">
+            <h2 class="fw-semibold text-info mb-2" style="white-space:nowrap;">
+        <i class="bi bi-person-plus-fill me-2"></i>Signup for <span class="text-info">MindMirror</span>
+        </h2>
+
+        <p class="text-white small">Begin your journey of self-discovery 🚀</p>
+      </div>
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert 
+        {% if message.tags == 'success' %}alert-success
+        {% elif message.tags == 'error' %}alert-danger
+        {% elif message.tags == 'warning' %}alert-warning
+        {% else %}alert-info
+        {% endif %} 
+        alert-dismissible fade show mt-3" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+
+      <form method="post">
+  {% csrf_token %}
+
+  <!-- Email + Send OTP -->
+  <div class="mb-3 row align-items-center">
+    <div class="col-8">
+      <label for="email" class="form-label text-light">
+        <i class="bi bi-envelope-fill me-1"></i> Email
+      </label>
+      <input type="email" class="form-control" id="email" name="email" required value="{{email}}">
+    </div>
+    <div class="col-4 mt-4">
+    <button type="submit" name="send_otp" value="send_otp" class="btn btn-sm btn-outline-info w-100">Send OTP</button>
+
+    </div>
+  </div>
+
+  <!-- OTP input -->
+  <div class="mb-3">
+    <label for="otp" class="form-label text-light">
+      <i class="bi bi-shield-lock-fill me-1"></i> Enter OTP
+    </label>
+    <input type="text" class="form-control" id="otp" name="otp" value="{{otp}}">
+  </div>
+
+  <div class="mb-3">
+    <label for="fullname" class="form-label text-light">
+      <i class="bi bi-shield-lock-fill me-1"></i> Fullname
+    </label>
+    <input type="text" class="form-control" id="fullname" name="fullname" value="{{fullname}}">
+  </div>
+
+  <!-- Password -->
+  <div class="mb-3">
+    <label for="password1" class="form-label text-light">
+      <i class="bi bi-lock-fill me-1"></i> Password
+    </label>
+    <input type="password" class="form-control" id="password1" name="password1" >
+  </div>
+
+  <!-- Confirm Password -->
+  <div class="mb-3">
+    <label for="password2" class="form-label text-light">
+      <i class="bi bi-lock-fill me-1"></i> Confirm Password
+    </label>
+    <input type="password" class="form-control" id="password2" name="password2" >
+  </div>
+
+  <!-- Submit -->
+  <button type="submit" class="hero-btn w-100 mt-2">Create Account</button>
+</form>
+
+
+      <p class="mt-4 text-center text-light">
+        Already have an account?
+        <a href="{% url 'login' %}" class="text-info text-decoration-none">Login here</a>
+      </p>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

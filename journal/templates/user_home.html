@@ -1,0 +1,126 @@
+{% extends 'user_navigation.html' %}
+
+{% block title %}Home - MindMirror{% endblock %}
+
+{% block body %}
+<style>
+.dashboard-card {
+    background-color: #343a40 !important;
+    min-height: 250px;
+    transition: all 0.3s ease-in-out;
+    border-radius: 16px;
+}
+
+.dashboard-card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+
+.dashboard-card h4 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.dashboard-btn {
+    margin-top: 10px;
+}
+
+.welcome-text {
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.lead {
+    font-size: 1.1rem;
+}
+
+.card-btn{
+    background-color: #0dcaf0;
+    color: #f1f1f1;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.card-btn:hover{
+    background-color: lightblue;
+    color: #ffffff;
+    transform: translateY(2px);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+</style>
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert 
+        {% if message.tags == 'success' %}alert-success
+        {% elif message.tags == 'error' %}alert-danger
+        {% elif message.tags == 'warning' %}alert-warning
+        {% else %}alert-info
+        {% endif %} 
+        alert-dismissible fade show mt-3" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+<div class="container py-5">
+  <h2 class="mb-3 welcome-text">Welcome back, {{ request.user.first_name }} 👋</h2>
+  <p class="lead">Track your mood, reflect on your thoughts, and understand yourself better every day.</p>
+
+  <div class="row mt-5 g-4">
+  <!-- Track Mood Card -->
+  <div class="col-md-4">
+    <div class="card dashboard-card h-100 text-center p-4 d-flex flex-column justify-content-between">
+      <div>
+        <h4 class="text-light"><i class="bi bi-emoji-smile text-primary me-2"></i>Track Mood</h4>
+        <p class="text-light">Log how you're feeling right now. Reflect on your emotions and give them words.</p>
+      </div>
+      <div>
+        <a href="{% url 'track_mood' %}" class="card-btn dashboard-btn mt-5">Track Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Journal Card -->
+  <div class="col-md-4">
+    <div class="card dashboard-card h-100 text-center p-4 d-flex flex-column justify-content-between">
+      <div>
+        <h4 class="text-light"><i class="bi bi-journal-text text-success me-2"></i>Mood Reflections</h4>
+        <p class="text-light">Write your thoughts, revisit past days, and build a habit of self-expression.</p>
+      </div>
+      <div>
+        <a href="{% url 'my_reflections' %}" class="card-btn dashboard-btn mt-5">View Reflections</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Insights Card -->
+  <div class="col-md-4">
+    <div class="card dashboard-card h-100 text-center p-4 d-flex flex-column justify-content-between">
+      <div>
+        <h4 class="text-light"><i class="bi bi-graph-up text-warning me-2"></i>Mood Insights</h4>
+        <p class="text-light">Visualize your mood trends and see how your emotional journey evolves over time.</p>
+      </div>
+      <div>
+        <a href="{% url 'insights' %}" class="card-btn dashboard-btn mt-5">View Insights</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="mt-5 text-center">
+    <blockquote class="blockquote">
+      <p class="mb-0 fst-italic opacity-75">"Your present emotions are not your permanent identity."</p>
+      <footer class="blockquote-footer mt-2">MindMirror</footer>
+    </blockquote>
+  </div>
+</div>
+{% endblock %}

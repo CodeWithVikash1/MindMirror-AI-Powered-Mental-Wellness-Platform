@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}MindMirror{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg glass-nav">
+    <div class="container-fluid">
+      <a class="navbar-brand text-light fw-bold nav-head" href="{% url 'index' %}" style="font-size:25px">
+        <i class="bi bi-stars"></i> MindMirror
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+
+            <li class="nav-item">
+              <a class="nav-link home-btn me-2" href="{% url 'user_home' %}">
+                <i class="bi bi-house-door me-1"></i> Home
+              </a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link home-btn me-2" href="{% url 'track_mood' %}">
+                <i class="bi bi-emoji-smile me-1"></i> Track Mood
+            </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link home-btn me-2" href="{% url 'my_reflections' %}">
+                <i class="bi bi-journal-text me-1"></i> My Reflections
+              </a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link home-btn me-2" href="{% url 'insights' %}">
+                <i class="bi bi-graph-up me-1"></i> Insights
+            </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link home-btn me-2" href="{% url 'profile' %}">
+                <i class="bi bi-person-circle me-1"></i> Profile
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link home-btn text-danger me-2" href="{% url 'logout' %}">
+                <i class="bi bi-box-arrow-right me-1"></i> Logout
+              </a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  
+<div class="container mt-4">
+  {% block body %}
+  {% endblock %}
+</div>
+    
+
+  <!-- Footer -->
+  <footer class="bg-dark text-light py-4 mt-5 foot">
+    <div class="container">
+      <div class="row text-center text-md-start">
+        <div class="col-md-4 mb-3">
+          <h5 class="text-info"><i class="bi bi-envelope-fill me-2"></i> Email</h5>
+          <a href="mailto:gargvv156@gmail.com" class="text-light text-decoration-none">gargvv156@gmail.com</a>
+        </div>
+        <div class="col-md-4 mb-3">
+          <h5 class="text-info"><i class="bi bi-telephone-fill me-2"></i> Contact</h5>
+          <a href="tel:+919711524631" class="text-light text-decoration-none">+91 9711524631</a>
+        </div>
+        <div class="col-md-4 mb-3">
+          <h5 class="text-info"><i class="bi bi-geo-alt-fill me-2"></i> Location</h5>
+          <p class="mb-0">Ballabgarh, Faridabad</p>
+        </div>
+      </div>
+      <hr class="border-light">
+      <p class="text-center mb-0">&copy; 2025 MindMirror. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

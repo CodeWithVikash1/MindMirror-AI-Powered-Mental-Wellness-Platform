@@ -1,0 +1,68 @@
+{% extends 'user_navigation.html' %}
+{% load static %}
+{% block title %}Profile - MindMirror{% endblock %}
+{% block body %}
+
+<style>
+    .card-btn{
+    background-color: #0dcaf0;
+    color: #f1f1f1;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.card-btn:hover{
+    background-color: lightblue;
+    color: #ffffff;
+    transform: translateY(2px);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+</style>
+<div class="container mt-5 d-flex justify-content-center">
+<div class="card p-4 shadow bg-dark text-light rounded-4" style="max-width: 600px; width: 100%;">
+<h3 class="text-center text-light mb-4">
+    {% if messages %}
+  {% for message in messages %}
+    <div class="alert 
+        {% if message.tags == 'success' %}alert-success
+        {% elif message.tags == 'error' %}alert-danger
+        {% elif message.tags == 'warning' %}alert-warning
+        {% else %}alert-info
+        {% endif %} 
+        alert-dismissible fade show mt-3" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+
+    <i class="bi bi-person-circle me-2"></i> Your Profile
+</h3>
+
+<div class="container rounded-4 p-4">
+    <h5 class="mb-3 text-info"><i class="bi bi-person-fill me-2"></i>Name:</h5>
+    <p class="fs-5">{{ user.get_full_name|default:user.username }}</p>
+
+    <h5 class="mb-3 text-info"><i class="bi bi-envelope-fill me-2"></i>Email:</h5>
+    <p class="fs-5">{{ user.email }}</p>
+
+    <h5 class="mb-3 text-info"><i class="bi bi-calendar-check-fill me-2"></i>Joined On:</h5>
+    <p class="fs-5">{{ user.date_joined|date:"d M Y" }}</p>
+
+    <div class="text-center mt-4">
+    <a href="{% url 'edit_profile' %}" class="card-btn">
+        <i class="bi bi-pencil-square me-1"></i> Edit Profile
+    </a>
+    </div>
+</div>
+</div>
+</div>
+
+{% endblock %}

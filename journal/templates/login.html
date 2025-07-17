@@ -1,0 +1,61 @@
+{% extends 'navigation.html' %}
+{% load static %}
+
+{% block title %}Login - MindMirror{% endblock %}
+
+{% block body %}
+
+
+<div class="position-relative" style="background: url('{% static 'images/login.jpg' %}') no-repeat center center / cover; min-height: 100vh;">
+  
+  <!-- Dark Overlay -->
+  <div class="position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(0, 0, 0, 0.7);"></div>
+
+  <!-- Login Box Centered -->
+  <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh; position: relative; z-index: 2;">
+    <div class="glass-container p-5" style="max-width: 420px; width: 100%; border-radius: 15px; box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);">
+      
+      <div class="text-center mb-4">
+        <h2 class="fw-semibold text-info mb-2" style="white-space:nowrap;">
+          <i class="bi bi-shield-lock-fill me-2"></i>Login to <span class="text-info">MindMirror</span>
+        </h2>
+        <p class="text-light small ">Welcome back! Let’s continue your journey ✨</p>
+      </div>
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert 
+        {% if message.tags == 'success' %}alert-success
+        {% elif message.tags == 'error' %}alert-danger
+        {% elif message.tags == 'warning' %}alert-warning
+        {% else %}alert-info
+        {% endif %} 
+        alert-dismissible fade show mt-3" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="email" class="form-label text-light"><i class="bi bi-envelope-fill me-1"></i> Email Address</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label text-light"><i class="bi bi-lock-fill me-1"></i> Password</label>
+          <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+
+        <button type="submit" class="hero-btn w-100 mt-2">Login</button>
+      </form>
+
+      <p class="mt-4 text-center text-light">Don't have an account? 
+        <a href="{% url 'signup' %}" class="text-info text-decoration-none">Signup here</a>
+      </p>
+      
+    </div>
+  </div>
+</div>
+{% endblock %}

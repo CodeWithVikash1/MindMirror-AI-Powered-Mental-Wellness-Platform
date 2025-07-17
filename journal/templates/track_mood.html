@@ -1,0 +1,157 @@
+{% extends 'user_navigation.html' %}
+
+{% block title %}Track Mood - MindMirror{% endblock %}
+
+{% block body %}
+<style>
+.my-container{
+    background-color: #343a40 !important;
+}
+.mood-option {
+    display: inline-block;
+    padding: 15px 20px;
+    margin: 10px;
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.mood-option:hover {
+    background-color: lightblue;
+    border-color: #0dcaf0;
+}
+
+.mood-option input[type="radio"] {
+    display: none;
+}
+
+.mood-option.selected {
+    background-color: #0dcaf0;
+    color: white;
+    border-color: #0dcaf0;
+}
+
+.form-container {
+    max-width: 600px;
+    margin: auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.dark-card input,
+.dark-card textarea {
+background-color: #2b2f32;       /* Slightly lighter than card */
+  color: #e0e0e0;                  /* Soft white */
+  border: 1px solid white;          /* Subtle border */
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 16px;
+  resize: vertical;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.dark-card textarea::placeholder {
+  color: #999;
+  font-style: italic;
+}
+.dark-card input:focus,
+.dark-card textarea:focus {
+  outline: none;
+  border-color: #0dcaf0; 
+  box-shadow: 0 0 5px rgba(13, 202, 240, 0.4);
+  background-color: #1f2225;
+  color : white;
+}
+
+.card-btn{
+    background-color: #0dcaf0;
+    color: #f1f1f1;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.card-btn:hover{
+    background-color: lightblue;
+    color: #ffffff;
+    transform: translateY(2px);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+</style>
+
+<div class="container py-5">
+<div class="form-container my-container">
+    <h3 class="mb-4 text-center"><i class="bi bi-emoji-smile text-primary"></i> Track Your Mood</h3>
+{% if messages %}
+{% for message in messages %}
+    <div class="alert 
+        {% if message.tags == 'success' %}alert-success
+        {% else %}alert-info
+        {% endif %} 
+        alert-dismissible fade show mt-3" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+{% endif %}
+    <form method="post">
+    {% csrf_token %}
+    <div class="mb-4 text-center">
+        <label class="mood-option" id="happy">
+        😀 Happy
+        <input type="radio" name="mood" value="Happy" required>
+        </label>
+        <label class="mood-option" id="sad">
+        😢 Sad
+        <input type="radio" name="mood" value="Sad">
+        </label>
+        <label class="mood-option" id="angry">
+        😠 Angry
+        <input type="radio" name="mood" value="Angry">
+        </label>
+        <label class="mood-option" id="anxious">
+        😰 Anxious
+        <input type="radio" name="mood" value="Anxious">
+        </label>
+        <label class="mood-option" id="calm">
+        😌 Calm
+        <input type="radio" name="mood" value="Calm">
+        </label>
+        <label class="mood-option" id="excited">
+        🤩 Excited
+        <input type="radio" name="mood" value="Excited">
+        </label>
+    </div>
+
+    <div class="mb-4 dark-card">
+        <label for="note" class="form-label  fw-bold">✨ What's on your mind?</label>
+        <textarea name="note" id="note" class="form-control my-form" rows="4" placeholder="Write something about your mood..." required></textarea>
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="card-btn">Submit Mood</button>
+    </div>
+    </form>
+</div>
+</div>
+
+<script>
+const options = document.querySelectorAll('.mood-option');
+options.forEach(option => {
+    option.addEventListener('click', () => {
+    options.forEach(opt => opt.classList.remove('selected'));
+    option.classList.add('selected');
+    option.querySelector('input').checked = true;
+    });
+});
+</script>
+{% endblock %}
